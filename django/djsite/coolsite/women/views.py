@@ -24,6 +24,9 @@ class WomenHome(ListView):
         context['cat_selected'] = 0
         return context
 
+    def get_queryset(self): # отображение только опубликованных статей
+        return Women.objects.filter(is_published=True)
+
 #def index(request):
 #    posts = Women.objects.all()
 
