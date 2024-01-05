@@ -6,7 +6,7 @@ from .views import *
 # Эти пути прописать в файле base.html начиная с 20 строчки кода (block mainmenu)
 
 urlpatterns = [
-    path('', index, name='home'),  # http://127.0.0.1:8000/women/
+    path('', WomenHome.as_view(), name='home'),  # http://127.0.0.1:8000/women/
     path('about/',about, name='about'), # прописываем маршут к страницам (шаблонам)
                                         # после этого в файле vievs.py прописываем функции (представления)
     path('addpage/', addpage, name='add_page'),
