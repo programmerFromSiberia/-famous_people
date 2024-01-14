@@ -10,7 +10,8 @@ from .models import *
 from .utils import *
 
 
-class WomenHome(DataMixin, ListView):
+class WomenHome(DataMixin, ListView):  # отображение главной страницы
+    paginate_by = 3  # количество элементов на одной странице = 3
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'

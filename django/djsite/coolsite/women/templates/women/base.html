@@ -67,8 +67,36 @@
 	<div class="content-text">
 {% block content %}
 {% endblock %}
+{% if page_obj.has_other_pages %}  <!-- если контент умещается на одной странице
+									то отображение номеров страниц не будет -->
+<nav class="list-pages">   <!-- разбиваем контент постранично -->
+    <ul>
+{% if page_obj.has_previous %}  <!-- отображение ссылок (кнопки) для перехода на предыдущую страницу. -->
+<li class="page-num">
+         <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+</li>
+{% endif %}
+        {% for p in paginator.page_range %}
+		{% if page_obj.number == p %} <!-- визуально выделяем номер выбраной страницы -->
+        <li class="page-num page-num-selected">{{ p }}</li>
+		<!--уменьшаем значение на 2 и увеличивая на 2 относительно выбранного (текущего) номера страницы. -->
+					{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+		{% endif %}
+        {% endfor %}
+
+{% if page_obj.has_next %}  <!-- отображение ссылок (кнопки) для перехода на следующую страницу. -->
+<li class="page-num">
+         <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+</li>
+{% endif %}
+    </ul>
+</nav>
+{% endif %}
 	</div>
-<!-- Конец блока контента -->
+	<!-- Конец блока контента -->
 
 </td></tr></table>
 </td></tr>
