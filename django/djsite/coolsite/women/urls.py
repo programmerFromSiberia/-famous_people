@@ -1,6 +1,5 @@
 from django.urls import path, re_path
 from django.utils import archive
-
 from .views import *
 
 # Эти пути прописать в файле base.html начиная с 20 строчки кода (block mainmenu)
