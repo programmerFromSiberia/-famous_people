@@ -30,7 +30,7 @@ class Women(models.Model): # создаем таблицу базы данных
         verbose_name = 'Известные женщины'
         verbose_name_plural = 'Известные женщины' # убираем букву "s" в админ панели
         # добавляем сортировку по полям (указываем какие поля) в админ панели
-        ordering = ['-time_create', 'title']
+        ordering = ['id']
 #(урок 5)
 
 # Создаем файл миграции пописав в консоли команду "python manage.py makemigrations"
