@@ -125,3 +125,16 @@ class WomenCategory(DataMixin, ListView):
 #     }
 #
 #     return render(request, 'women/index.html', context=context)
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm  # форма регистрации в джанго
+    template_name = 'women/register.html' # ссылка на шаблон регистрации
+    success_url = reverse_lazy('login')  # перенаправление на url адрес при успешной регистрации
+
+    def get_context_data(self, *, object_list=None, **kwargs): # используем метод get_context_data
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Регистрация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+
