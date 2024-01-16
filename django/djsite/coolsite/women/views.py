@@ -1,4 +1,6 @@
+from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -65,8 +67,8 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView): # страница д�
 def contact(request):
     return HttpResponse("Обратная связь")
 
-def login(request):
-    return HttpResponse("Авторизация")
+# def login(request):   это была временная заглушка
+#     return HttpResponse("Авторизация")
 
 
 def pageNotFound(request, exception):
@@ -128,7 +130,7 @@ class WomenCategory(DataMixin, ListView):
 
 class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm  # форма регистрации в джанго
-    template_name = 'women/register.html' # ссылка на шаблон регистрации
+    template_name = 'women/register.html' # путь (ссылка) на шаблон регистрации
     success_url = reverse_lazy('login')  # перенаправление на url адрес при успешной регистрации
 
     def get_context_data(self, *, object_list=None, **kwargs): # используем метод get_context_data
@@ -136,5 +138,30 @@ class RegisterUser(DataMixin, CreateView):
         c_def = self.get_user_context(title="Регистрация")
         return dict(list(context.items()) + list(c_def.items()))
 
+    # При успешной регистрации пользователя будем автоматически его авторизовывать
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')  # направляем его на главную страницу
+
+# создаем класс авторизации  пользователя
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm  # форма авторизации
+    template_name = 'women/login.html' # путь (ссылка) на шаблон авторизации
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Авторизация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    # используем метод get_success_url() для перенаправлениям авторизованного
+    # пользователя на главную страницу сайта
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+def logout_user(request):  # функция представления для выхода из авторизации
+    logout(request)
+    return redirect('login')
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -31,8 +31,9 @@ class AddPostForm(forms.ModelForm): # создаем таблицу базы д�
 
         return content
 
-class RegisterUserForm(UserCreationForm):  # улучшаем вид формы регистрации пользователя, добавляем поля
-    # с помощью виджетов оформляем вышеуказанные поля
+# улучшаем вид формы регистрации пользователя, добавляем поля с помощью виджетов оформляем вышеуказанные поля
+
+class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
@@ -41,8 +42,12 @@ class RegisterUserForm(UserCreationForm):  # улучшаем вид формы 
     class Meta:
         model = User  # работает с таблицей базы данных
         fields = ('username', 'email', 'password1', 'password2')  # отображение полей таблицы
-        # с помощью виджетов оформляем вышеуказанные поля
 
 
+# улучшаем форму авторизации с помощью виджетов с помощью виджетов оформляем вышеуказанные поля
+# username, password, класс Мета можно не применять.
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
 
