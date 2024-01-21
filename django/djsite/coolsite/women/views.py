@@ -24,7 +24,7 @@ class WomenHome(DataMixin, ListView):  # отображение главной �
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self): # отображение только опубликованных статей
-        return Women.objects.filter(is_published=True)
+        return Women.objects.filter(is_published=True).select_related('cat')
 
 #def index(request):
 #    posts = Women.objects.all()
@@ -98,14 +98,14 @@ class ShowPost(DataMixin, DetailView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class WomenCategory(DataMixin, ListView):
+class WomenCategory(DataMixin, ListView): # отображение по категориям
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
     allow_empty = False # если категория не найдена то ошибка 404
 
     def get_queryset(self):
-        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
+        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
