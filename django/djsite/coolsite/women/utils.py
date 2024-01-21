@@ -8,7 +8,7 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 ]
 
 class DataMixin:
-    paginate_by = 3  # количество элементов на одной странице = 3
+    paginate_by = 20  # количество элементов на одной странице = 3
 
     def get_user_context(self, **kwargs):
         context = kwargs
