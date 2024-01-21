@@ -21,6 +21,7 @@
 
 ДЗ 61 (от 21.01.2024)  Классы представлений (Class-Based Views - CBV), подключил к маршрутам (метод as_view()). Атрибуты: model, template_name, context_object_name, extra_context, allow_empty. Методы: get_context_data(), get_queryset(). Атрибуты класса DetailView: slug_url_kwarg, pk_url_kwarg. Атрибут класса CreateView: form_class и success_url. Функция reverse_lazy() и reverse().
 
+ДЗ 62 (от 23.01.2024) mixins (миксины) устранение дублирования кода в классах представлений. Сделан на основе примера стандартного миксина LoginRequiredMixin и декоратор login_required.
 
 
 
