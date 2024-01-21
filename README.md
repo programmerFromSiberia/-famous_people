@@ -19,4 +19,13 @@
 
 ДЗ 59 (от 14.01.2024) Сделал форму, связанную с моделью на основе базового класса ModelForm. Класс Meta для описания связывания (атрибуты model, fields, widgets). Тонкая настройка свойств полей через конструктор дочернего класса и коллекцию fields. Метод формы save(). Загрузка изображений через форму. Коллекция request.FILES и атрибут тега form enctype="multipart/form-data". Создание собственных валидаторов формы. Исключение ValidationError().
 
+ДЗ 61 (от 21.01.2024)  Классы представлений (Class-Based Views - CBV), подключил к маршрутам (метод as_view()). Атрибуты: model, template_name, context_object_name, extra_context, allow_empty. Методы: get_context_data(), get_queryset(). Атрибуты класса DetailView: slug_url_kwarg, pk_url_kwarg. Атрибут класса CreateView: form_class и success_url. Функция reverse_lazy() и reverse().
+
+
+
+
+
+
+
+
 
