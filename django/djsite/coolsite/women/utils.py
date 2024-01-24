@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.core.cache import cache
 
 from .models import *
 
@@ -8,11 +9,14 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 ]
 
 class DataMixin:
-    paginate_by = 20  # количество элементов на одной странице = 3
+    paginate_by = 3  # количество элементов на одной странице = 3
 
     def get_user_context(self, **kwargs):
         context = kwargs
-        cats = Category.objects.annotate(Count('women'))  # если у нас есть рубрика но в ней нет постов то она не отображается
+        cats = cache.get('cats')  # кешируем с помощью get
+        if not cats:
+            cats = Category.objects.annotate(Count('women'))  # если у нас есть рубрика но в ней нет постов то она не отображается
+            cache.set('cats', cats, 60)
 
         user_menu = menu.copy()  # если пользователь не авторизован то в меню убираем "Добавить статью"
         if not self.request.user.is_authenticated:  #  используем аутентификацию is_authenticated
